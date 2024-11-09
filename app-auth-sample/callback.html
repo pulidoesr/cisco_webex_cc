@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webex Callback</title>
+</head>
+<body>
+    <h1>Webex Token Display</h1>
+    <p id="token"></p>
+
+    <script>
+        // Parse the authorization code from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const authCode = urlParams.get("code");
+
+        if (authCode) {
+            // Replace with your Client ID, Client Secret, and Redirect URI
+            const clientId = "YOUR_CLIENT_ID";
+            const clientSecret = "YOUR_CLIENT_SECRET";
+            const redirectUri = "https://yourdomain.com/callback.html";
+
+            // Use fetch to exchange code for access token
+            fetch("https://webexapis.com/v1/access_token", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams({
+                    grant_type: "authorization_code",
+                    client_id: clientId,
+                    client_secret: clientSecret,
+                    code: authCode,
+                    redirect_uri: redirectUri,
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.access_token) {
+                    // Display the token
+                    document.getElementById("token").innerText = "Access Token: " + data.access_token;
+                } else {
+                    document.getElementById("token").innerText = "Failed to retrieve token";
+                }
+            })
+            .catch(error => console.error("Error retrieving token:", error));
+        } else {
+            document.getElementById("token").innerText = "Authorization code not found in URL";
+        }
+    </script>
+</body>
+</html>

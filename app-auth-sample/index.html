@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webex Authorization</title>
+</head>
+<body>
+    <h1>Webex Token Retrieval</h1>
+    <button id="authorize">Authorize with Webex</button>
+
+    <script>
+        document.getElementById("authorize").onclick = function() {
+            // Replace with your actual Client ID and Redirect URI
+            const clientId = "Ccd3354bb010d5319da8bbcefbbedd52b621ec6050222f462b0aa0ff27dbec3de";
+            const redirectUri = "http://localhost:5000/cisco_webex_cc/app-auth-sample/callback.html";
+            const responseType = "code";
+            const scope = "spark:all";  // Define your scopes here
+
+            const authUrl = `https://webexapis.com/v1/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=${responseType}&scope=${scope}`;
+            
+            // Redirect to Webex authorization
+            window.location.href = authUrl;
+        };
+    </script>
+</body>
+</html>
